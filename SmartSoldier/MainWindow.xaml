@@ -1,0 +1,22 @@
+﻿<Window x:Class="SmartSoldier.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmartSoldier"
+        xmlns:views="clr-namespace:SmartSoldier.Views"
+        mc:Ignorable="d"
+        Title="SmartSoldier" Height="450" Width="800">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Personal" x:Name="mnuPersonal" Click="MenuItem_Click" />
+            <MenuItem Header="Feuerunterstützung" x:Name="mnuFeuerUnterstuetzung" Click="MenuItem_Click" />
+            <MenuItem Header="Logistik" x:Name="mnuLogistik" Click="MenuItem_Click" />
+            <MenuItem Header="Transport" x:Name="mnuTransport" Click="MenuItem_Click" />
+            <MenuItem Header="UAV" x:Name="mnuIHA" Click="MenuItem_Click" />
+            <MenuItem Header="Gesundheit" x:Name="mnuGesundheit" Click="MenuItem_Click" />
+            <MenuItem Header="Kommunikation" x:Name="mnuKommunikation" Click="MenuItem_Click" />
+        </Menu>
+        <ContentControl x:Name="MainContent" />
+    </DockPanel>
+</Window>
