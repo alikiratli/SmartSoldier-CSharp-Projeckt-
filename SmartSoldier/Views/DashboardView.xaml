@@ -1,0 +1,70 @@
+<UserControl x:Class="SmartSoldier.Views.DashboardView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <!-- Oben links: Puls und Gesundheit -->
+        <Border Grid.Row="0" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Padding="10">
+            <StackPanel>
+                <TextBlock Text="Puls: 72 bpm" FontSize="16" />
+                <TextBlock Text="Gesundheitsstatus: Gut" FontSize="16" />
+            </StackPanel>
+        </Border>
+        <!-- Oben rechts: Wetter -->
+        <Border Grid.Row="0" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Padding="10">
+            <StackPanel>
+                <TextBlock Text="Wetter: Klar, 25°C" FontSize="16" />
+                <TextBlock Text="Luftfeuchtigkeit: 40%" FontSize="16" />
+                <TextBlock Text="Windgeschwindigkeit: 15 km/h" FontSize="16" />
+                <TextBlock Text="Windrichtung: NW" FontSize="16" />
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Kompass:" FontSize="16" Margin="0,0,5,0" />
+                    <!-- Kompass-Pfeil als Polygon, drehbar -->
+                    <Canvas Width="40" Height="40">
+                        <Polygon x:Name="compassArrow" Points="20,0 30,40 20,30 10,40" Fill="Black"
+                                 RenderTransformOrigin="0.5,0.5">
+                            <Polygon.RenderTransform>
+                                <RotateTransform Angle="0" />
+                            </Polygon.RenderTransform>
+                        </Polygon>
+                    </Canvas>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <!-- Unten links: Personal-Verbindung -->
+        <Border Grid.Row="1" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Padding="10">
+            <StackPanel>
+                <TextBlock Text="Personalverbindung" FontSize="16" FontWeight="Bold" Margin="0,0,0,5" />
+                <DataGrid x:Name="dgDashboardPersonal" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" Height="150">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Vorname}" Width="*" />
+                        <DataGridTemplateColumn Header="Status" Width="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Ellipse Width="16" Height="16" Fill="{Binding StatusColor}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Border>
+        <!-- Unten rechts: Schritte & Kalorien -->
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Padding="10">
+            <StackPanel>
+                <TextBlock Text="Schritte: 3500" FontSize="16" />
+                <TextBlock Text="Verbrannte Kalorien: 250 kcal" FontSize="16" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

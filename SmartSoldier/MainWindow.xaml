@@ -9,6 +9,7 @@
         Title="SmartSoldier" Height="450" Width="800">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Übersicht" x:Name="mnuDashboard" Click="MenuItem_Click" />
             <MenuItem Header="Personal" x:Name="mnuPersonal" Click="MenuItem_Click" />
             <MenuItem Header="Feuerunterstützung" x:Name="mnuFeuerUnterstuetzung" Click="MenuItem_Click" />
             <MenuItem Header="Logistik" x:Name="mnuLogistik" Click="MenuItem_Click" />
@@ -16,6 +17,7 @@
             <MenuItem Header="UAV" x:Name="mnuIHA" Click="MenuItem_Click" />
             <MenuItem Header="Gesundheit" x:Name="mnuGesundheit" Click="MenuItem_Click" />
             <MenuItem Header="Kommunikation" x:Name="mnuKommunikation" Click="MenuItem_Click" />
+            <MenuItem Header="Waffenkamera" x:Name="mnuWaffenkamera" Click="MenuItem_Click" />
         </Menu>
         <ContentControl x:Name="MainContent" />
     </DockPanel>

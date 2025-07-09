@@ -13,8 +13,8 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        // Optional: Standardansicht setzen
-        MainContent.Content = new PersonellView();
+        // Standardansicht: Dashboard
+        MainContent.Content = new DashboardView();
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -23,6 +23,9 @@ public partial class MainWindow : Window
         {
             switch (menuItem.Name)
             {
+                case "mnuDashboard":
+                    MainContent.Content = new DashboardView();
+                    break;
                 case "mnuPersonal":
                     MainContent.Content = new PersonellView();
                     break;
@@ -43,6 +46,9 @@ public partial class MainWindow : Window
                     break;
                 case "mnuKommunikation":
                     MainContent.Content = new KommunikationView();
+                    break;
+                case "mnuWaffenkamera":
+                    MainContent.Content = new WaffenkameraView();
                     break;
             }
         }
