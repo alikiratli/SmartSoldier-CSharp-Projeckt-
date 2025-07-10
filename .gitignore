@@ -1,0 +1,26 @@
+# Build Outputs
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.pdb
+*.exe
+*.dll
+*.deps.json
+*.runtimeconfig.json
+
+# Visual Studio
+.vs/
+.vscode/
+*.sln.docstates
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini

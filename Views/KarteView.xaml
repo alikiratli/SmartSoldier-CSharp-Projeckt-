@@ -1,0 +1,38 @@
+<UserControl x:Class="SmartSoldier.Views.KarteView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+             mc:Ignorable="d">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Karte Header -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Karte und Navigation" FontSize="18" FontWeight="Bold" Margin="0,0,20,0" />
+            <Button x:Name="btnCurrentLocation" Content="⚪ Aktuelle Position" Width="150" Click="BtnCurrentLocation_Click" />
+            <Button x:Name="btnSetDestination" Content="⚫ Ziel setzen" Width="120" Margin="10,0,0,0" Click="BtnSetDestination_Click" />
+            <Button x:Name="btnGetRoute" Content="🗺️ Route berechnen" Width="140" Margin="10,0,0,0" Click="BtnGetRoute_Click" />
+        </StackPanel>
+        
+        <!-- WebView2 für Leaflet Karte -->
+        <wv2:WebView2 x:Name="mapWebView" Grid.Row="1" />
+        
+        <!-- Navigation Info -->
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,10,0,0">
+            <TextBlock x:Name="tbNavInfo" Text="Navigation: Kein Ziel gesetzt" 
+                       FontSize="14" FontWeight="Bold" Foreground="DarkBlue"/>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <TextBlock Text="Entfernung zum Ziel: " FontSize="12"/>
+                <TextBlock x:Name="tbDistance" Text="-- km" FontSize="12" FontWeight="Bold" Foreground="Green"/>
+                <TextBlock Text=" | Geschätzte Ankunft: " FontSize="12" Margin="20,0,0,0"/>
+                <TextBlock x:Name="tbETA" Text="-- Minuten" FontSize="12" FontWeight="Bold" Foreground="Orange"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

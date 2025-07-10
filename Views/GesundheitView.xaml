@@ -1,0 +1,33 @@
+<UserControl x:Class="SmartSoldier.Views.GesundheitView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <TextBlock Text="Gesundheitszustand und Erste-Hilfe-Anfrage" FontSize="20" />
+        <DataGrid x:Name="dgHealth" AutoGenerateColumns="False" Margin="0,30,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Vorname" Binding="{Binding Vorname}" />
+                <DataGridTextColumn Header="Nachname" Binding="{Binding Nachname}" />
+                <DataGridTextColumn Header="Puls" Binding="{Binding Puls}" />
+                <DataGridTextColumn Header="Temperatur" Binding="{Binding Temperatur}" />
+                <DataGridTextColumn Header="Location" Binding="{Binding Location}" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                <DataGridTemplateColumn Header="Erste Hilfe">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Erste Hilfe" Click="BtnErsteHilfe_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

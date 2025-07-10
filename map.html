@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartSoldier Karte</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .custom-div-icon {
+            background: none;
+            border: none;
+        }
+        .location-pin {
+            width: 20px;
+            height: 20px;
+            border-radius: 50% 50% 50% 0;
+            background: #3498db;
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 50%;
+            top: 50%;
+            margin: -15px 0 0 -15px;
+            animation: pulse 2s infinite;
+        }
+        .location-pin:after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            margin: 6px 0 0 6px;
+            background: #fff;
+            position: absolute;
+            border-radius: 50%;
+        }
+        .destination-pin {
+            width: 20px;
+            height: 20px;
+            border-radius: 50% 50% 50% 0;
+            background: #e74c3c;
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 50%;
+            top: 50%;
+            margin: -15px 0 0 -15px;
+        }
+        .destination-pin:after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            margin: 6px 0 0 6px;
+            background: #fff;
+            position: absolute;
+            border-radius: 50%;
+        }
+        @keyframes pulse {
+            0% { transform: rotate(-45deg) scale(1); }
+            50% { transform: rotate(-45deg) scale(1.1); }
+            100% { transform: rotate(-45deg) scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        // Karte initialisieren - Standardposition Berlin
+        var map = L.map('map').setView([52.5200, 13.4050], 13);
+
+        // OpenStreetMap Tile Layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Variablen für Marker und Routing
+        var currentLocationMarker = null;
+        var destinationMarker = null;
+        var routingControl = null;
+        var currentLocation = [52.5200, 13.4050]; // Berlin Zentrum als Standard
+
+        // Custom Icons
+        var currentLocationIcon = L.divIcon({
+            html: '<div class="location-pin"></div>',
+            iconSize: [30, 30],
+            className: 'custom-div-icon'
+        });
+
+        var destinationIcon = L.divIcon({
+            html: '<div class="destination-pin"></div>',
+            iconSize: [30, 30],
+            className: 'custom-div-icon'
+        });
+
+        // Aktuelle Position setzen
+        function setCurrentLocation(lat, lng) {
+            currentLocation = [lat, lng];
+            
+            if (currentLocationMarker) {
+                map.removeLayer(currentLocationMarker);
+            }
+            
+            currentLocationMarker = L.marker([lat, lng], {icon: currentLocationIcon})
+                .addTo(map)
+                .bindPopup('Aktuelle Position')
+                .openPopup();
+            
+            map.setView([lat, lng], 15);
+            return { latitude: lat, longitude: lng };
+        }
+
+        // Ziel setzen
+        function setDestination(lat, lng) {
+            if (destinationMarker) {
+                map.removeLayer(destinationMarker);
+            }
+            
+            destinationMarker = L.marker([lat, lng], {icon: destinationIcon})
+                .addTo(map)
+                .bindPopup('Ziel');
+            
+            // Route berechnen wenn beide Positionen vorhanden
+            if (currentLocation) {
+                calculateRoute();
+            }
+            
+            return { latitude: lat, longitude: lng };
+        }
+
+        // Route berechnen
+        function calculateRoute() {
+            if (!currentLocation || !destinationMarker) {
+                return { error: 'Aktuelle Position oder Ziel fehlt' };
+            }
+
+            // Alte Route entfernen
+            if (routingControl) {
+                map.removeControl(routingControl);
+            }
+
+            var destinationPos = destinationMarker.getLatLng();
+            
+            routingControl = L.Routing.control({
+                waypoints: [
+                    L.latLng(currentLocation[0], currentLocation[1]),
+                    L.latLng(destinationPos.lat, destinationPos.lng)
+                ],
+                routeWhileDragging: false,
+                addWaypoints: false,
+                createMarker: function() { return null; }, // Keine zusätzlichen Marker
+                lineOptions: {
+                    styles: [{ color: '#28a745', weight: 4, opacity: 0.8 }]
+                }
+            }).on('routesfound', function(e) {
+                var routes = e.routes;
+                var summary = routes[0].summary;
+                
+                // Distanz in km
+                var distance = (summary.totalDistance / 1000).toFixed(2);
+                
+                // Zeit in Minuten
+                var timeMinutes = Math.round(summary.totalTime / 60);
+                
+                // Navigation instructions
+                var instructions = routes[0].instructions;
+                var nextInstruction = instructions.length > 1 ? instructions[1].text : 'Route folgen';
+                
+                // C# Callback aufrufen
+                if (window.chrome && window.chrome.webview) {
+                    window.chrome.webview.postMessage({
+                        type: 'routeCalculated',
+                        distance: distance,
+                        timeMinutes: timeMinutes,
+                        instruction: nextInstruction,
+                        allInstructions: instructions.map(inst => inst.text)
+                    });
+                }
+            }).addTo(map);
+
+            return { status: 'Route wird berechnet...' };
+        }
+
+        // GPS Position abrufen
+        function getCurrentGPSLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        var lat = position.coords.latitude;
+                        var lng = position.coords.longitude;
+                        setCurrentLocation(lat, lng);
+                        
+                        if (window.chrome && window.chrome.webview) {
+                            window.chrome.webview.postMessage({
+                                type: 'locationUpdated',
+                                latitude: lat,
+                                longitude: lng
+                            });
+                        }
+                    },
+                    function(error) {
+                        console.log('GPS Fehler: ' + error.message);
+                        // Fallback auf Berlin
+                        setCurrentLocation(52.5200, 13.4050);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 60000
+                    }
+                );
+            } else {
+                console.log('Geolocation wird nicht unterstützt');
+                setCurrentLocation(52.5200, 13.4050);
+            }
+        }
+
+        // Karte auf Bounds anpassen
+        function fitMapToBounds() {
+            if (currentLocationMarker && destinationMarker) {
+                var group = new L.featureGroup([currentLocationMarker, destinationMarker]);
+                map.fitBounds(group.getBounds().pad(0.1));
+            }
+        }
+
+        // Initialisierung
+        setCurrentLocation(52.5200, 13.4050);
+        
+        // GPS Position automatisch abrufen beim Laden
+        getCurrentGPSLocation();
+    </script>
+</body>
+</html>
