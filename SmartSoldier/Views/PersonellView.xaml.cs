@@ -52,6 +52,18 @@ namespace SmartSoldier.Views
             txtWaffe.Clear();
         }
 
+        private void BtnDeletePerson_Click(object sender, RoutedEventArgs e)
+        {
+            if (FindName("dgPersonell") is DataGrid dg && dg.SelectedItem is Person selected)
+            {
+                _team.Remove(selected);
+            }
+            else
+            {
+                MessageBox.Show("Bitte eine Person auswählen.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
         private void ShowTouchKeyboard(object sender, RoutedEventArgs e)
         {
             try
