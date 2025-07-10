@@ -1,0 +1,32 @@
+<UserControl x:Class="SmartSoldier.Views.FeuerUnterstuetzungView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Koordinaten:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,5"/>
+        <TextBox x:Name="txtKoordinaten" Grid.Row="0" Grid.Column="1" Margin="0,0,0,5"/>
+        <TextBlock Text="Feuerart:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,5"/>
+        <ComboBox x:Name="cmbFeuerart" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5">
+            <ComboBoxItem Content="Indirektes Feuer" />
+            <ComboBoxItem Content="Luftangriff" />
+        </ComboBox>
+        <TextBlock Text="Dauer (Minuten):" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,5"/>
+        <TextBox x:Name="txtDauer" Grid.Row="2" Grid.Column="1" Margin="0,0,0,5"/>
+        <TextBlock Text="Zeit:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,5"/>
+        <TextBox x:Name="txtZeit" Grid.Row="3" Grid.Column="1" Margin="0,0,0,5"/>
+        <Button x:Name="btnSenden" Content="Senden" Grid.Row="4" Grid.Column="1" Width="100" HorizontalAlignment="Left" Click="BtnSenden_Click"/>
+    </Grid>
+</UserControl>

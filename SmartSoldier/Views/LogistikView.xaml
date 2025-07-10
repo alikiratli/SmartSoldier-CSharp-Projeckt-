@@ -1,0 +1,41 @@
+<UserControl x:Class="SmartSoldier.Views.LogistikView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Text="Kategorie:" VerticalAlignment="Center" Margin="0,0,5,0" />
+            <ComboBox x:Name="cmbKategorie" Width="180" SelectionChanged="cmbKategorie_SelectionChanged">
+                <ComboBoxItem Content="Kritische Materialien" />
+                <ComboBoxItem Content="Andere Materialien" />
+            </ComboBox>
+        </StackPanel>
+        <DataGrid x:Name="dgMaterial" Grid.Row="1" AutoGenerateColumns="False" Margin="0,10,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Material" Binding="{Binding MaterialName}" />
+                <DataGridTextColumn Header="Anzahl" Binding="{Binding Anzahl}" />
+                <DataGridTextColumn Header="Bedarf" Binding="{Binding Bedarf}" />
+                <DataGridTextColumn Header="Fehlend" Binding="{Binding Fehlend}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btnAnfrage" Content="Anfrage senden" Grid.Row="2" Width="120" HorizontalAlignment="Left" Click="btnAnfrage_Click" />
+        <!-- Neue Material-Hinzufügung -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBox x:Name="txtNewMaterialName" Width="150" Margin="0,0,5,0" ToolTip="Materialname eingeben" />
+            <TextBox x:Name="txtNewAnzahl" Width="80" Margin="0,0,5,0" ToolTip="Anzahl eingeben" />
+            <TextBox x:Name="txtNewBedarf" Width="80" Margin="0,0,5,0" ToolTip="Bedarf eingeben" />
+            <Button x:Name="btnAddMaterial" Content="Hinzufügen" Click="BtnAddMaterial_Click" />
+        </StackPanel>
+    </Grid>
+</UserControl>

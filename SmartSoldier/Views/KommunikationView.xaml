@@ -1,0 +1,41 @@
+<UserControl x:Class="SmartSoldier.Views.KommunikationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Kommunikation" FontSize="20" />
+        <DataGrid x:Name="dgKommunikation" Grid.Row="1" AutoGenerateColumns="False" Margin="0,10,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Vorname" Binding="{Binding Vorname}" />
+                <DataGridTextColumn Header="Nachname" Binding="{Binding Nachname}" />
+                <DataGridTemplateColumn Header="Video" Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="📷" Click="BtnVideoCall_Click" ToolTip="Videoanruf"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Audio" Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="📞" Click="BtnAudioCall_Click" ToolTip="Sprachanruf"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Nachricht" Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="💬" Click="BtnMessage_Click" ToolTip="Nachricht senden"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
