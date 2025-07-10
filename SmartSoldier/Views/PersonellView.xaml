@@ -47,6 +47,7 @@
             <TextBox x:Name="txtAufgabe" Width="100" Margin="5,0,0,0" ToolTip="Aufgabe eingeben" GotFocus="ShowTouchKeyboard" />
             <TextBox x:Name="txtWaffe" Width="100" Margin="5,0,0,0" ToolTip="Waffe eingeben" GotFocus="ShowTouchKeyboard" />
             <Button x:Name="btnAddPerson" Content="Hinzufügen" Margin="5,0,0,0" Click="BtnAddPerson_Click" />
+            <Button x:Name="btnDeletePerson" Content="Löschen" Margin="5,0,0,0" Click="BtnDeletePerson_Click" />
         </StackPanel>
     </Grid>
 </UserControl>

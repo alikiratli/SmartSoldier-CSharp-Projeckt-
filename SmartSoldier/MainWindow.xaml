@@ -10,6 +10,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Übersicht" x:Name="mnuDashboard" Click="MenuItem_Click" />
+            <MenuItem Header="Karte" x:Name="mnuKarte" Click="MenuItem_Click" />
             <MenuItem Header="Personal" x:Name="mnuPersonal" Click="MenuItem_Click" />
             <MenuItem Header="Feuerunterstützung" x:Name="mnuFeuerUnterstuetzung" Click="MenuItem_Click" />
             <MenuItem Header="Logistik" x:Name="mnuLogistik" Click="MenuItem_Click" />

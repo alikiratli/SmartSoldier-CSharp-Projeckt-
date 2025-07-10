@@ -26,6 +26,9 @@ public partial class MainWindow : Window
                 case "mnuDashboard":
                     MainContent.Content = new DashboardView();
                     break;
+                case "mnuKarte":
+                    MainContent.Content = new KarteView();
+                    break;
                 case "mnuPersonal":
                     MainContent.Content = new PersonellView();
                     break;
