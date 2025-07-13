@@ -9,8 +9,84 @@
             <RowDefinition Height="3*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <!-- Kamerabild-Ersatz -->
-        <Border Grid.Row="0" Background="LightGreen" />
+        <!-- Kamerabild mit Nişan Alma Sistemi -->
+        <Grid Grid.Row="0">
+            <Border Background="LightGreen" />
+            <!-- Nişan Alma Çizgileri -->
+            <Canvas x:Name="canvasTargeting" Background="Transparent">
+                <!-- Merkez Çapraz Nişan -->
+                <Line x:Name="crosshairH" X1="0" Y1="0" X2="0" Y2="0" 
+                      Stroke="Red" StrokeThickness="3" Opacity="0.9" />
+                <Line x:Name="crosshairV" X1="0" Y1="0" X2="0" Y2="0" 
+                      Stroke="Red" StrokeThickness="3" Opacity="0.9" />
+                
+                <!-- Köşe Nişan Çizgileri -->
+                <!-- Sol Üst -->
+                <Line x:Name="cornerTL1" X1="0" Y1="0" X2="0" Y2="0" 
+                      Stroke="Lime" StrokeThickness="3" Opacity="0.8" />
+                <Line x:Name="cornerTL2" X1="0" Y1="0" X2="0" Y2="0" 
+                      Stroke="Lime" StrokeThickness="3" Opacity="0.8" />
+                
+                <!-- Sağ Üst -->
+                <Line x:Name="cornerTR1" X1="0" Y1="0" X2="0" Y2="0" 
+                      Stroke="Lime" StrokeThickness="3" Opacity="0.8" />
+                <Line x:Name="cornerTR2" X1="0" Y1="0" X2="0" Y2="0" 
+                      Stroke="Lime" StrokeThickness="3" Opacity="0.8" />
+                
+                <!-- Sol Alt -->
+                <Line x:Name="cornerBL1" X1="0" Y1="0" X2="0" Y2="0" 
+                      Stroke="Lime" StrokeThickness="3" Opacity="0.8" />
+                <Line x:Name="cornerBL2" X1="0" Y1="0" X2="0" Y2="0" 
+                      Stroke="Lime" StrokeThickness="3" Opacity="0.8" />
+                
+                <!-- Sağ Alt -->
+                <Line x:Name="cornerBR1" X1="0" Y1="0" X2="0" Y2="0" 
+                      Stroke="Lime" StrokeThickness="3" Opacity="0.8" />
+                <Line x:Name="cornerBR2" X1="0" Y1="0" X2="0" Y2="0" 
+                      Stroke="Lime" StrokeThickness="3" Opacity="0.8" />
+                
+                <!-- Mesafe Çemberleri -->
+                <Ellipse x:Name="rangeCircle1" Stroke="Yellow" StrokeThickness="2" 
+                         Fill="Transparent" Opacity="0.6" />
+                <Ellipse x:Name="rangeCircle2" Stroke="Yellow" StrokeThickness="1" 
+                         Fill="Transparent" Opacity="0.4" />
+                
+                <!-- Laser Nişan Noktası -->
+                <Ellipse x:Name="laserDot" Width="8" Height="8" Fill="Red" 
+                         Visibility="Hidden" Opacity="0.8" />
+                
+                <!-- Zoom Seviyesi İndikatörü -->
+                <TextBlock x:Name="tbZoomLevel" Text="ZOOM: 2.5x" 
+                           Foreground="White" FontSize="14" FontWeight="Bold"
+                           Canvas.Left="10" Canvas.Top="10" />
+                
+                <!-- Hedef Mesafe Bilgisi -->
+                <StackPanel x:Name="rangeInfo" Orientation="Vertical" 
+                            Canvas.Right="10" Canvas.Top="10" Background="Black" 
+                            Opacity="0.9">
+                    <TextBlock x:Name="tbTargetRange" Text="ENTFERNUNG: 125m" 
+                               Foreground="Orange" FontSize="12" FontWeight="Bold"
+                               FontFamily="Courier New" Margin="5,2"/>
+                    <TextBlock x:Name="tbLaserStatus" Text="LASER: EIN" 
+                               Foreground="Red" FontSize="12" FontWeight="Bold"
+                               FontFamily="Courier New" Margin="5,2"/>
+                    <TextBlock x:Name="tbWindage" Text="WIND: 2.1 m/s" 
+                               Foreground="Cyan" FontSize="10" FontFamily="Courier New" 
+                               Margin="5,2"/>
+                </StackPanel>
+                
+                <!-- Hedef Kilidi İndikatörü -->
+                <Rectangle x:Name="targetLockBox" Width="100" Height="80" 
+                           Stroke="Red" StrokeThickness="3" Fill="Transparent" 
+                           Visibility="Hidden" StrokeDashArray="4,4" />
+                
+                <!-- Ateş Hazırlık İndikatörü -->
+                <TextBlock x:Name="tbFireReady" Text="FEUER BEREIT" 
+                           Foreground="Red" FontSize="16" FontWeight="Bold"
+                           Canvas.Left="50" Canvas.Bottom="20" Visibility="Hidden"
+                           Effect="{x:Null}" />
+            </Canvas>
+        </Grid>
         <!-- Lasersteuerung -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0">
             <Button x:Name="btnLaserToggle" Content="Laser einschalten" Width="120" Click="BtnLaserToggle_Click" />

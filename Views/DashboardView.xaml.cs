@@ -87,23 +87,23 @@ namespace SmartSoldier.Views
 
         private void StartAnnaConnectionTimer()
         {
-            // Anna'nın 1 dakika (60000 ms) sonra bağlanması için timer
-            _annaConnectionTimer = new System.Timers.Timer(60000); // 1 dakika
+            // Anna verbindet sich nach 1 Minute (60000 ms) - Timer
+            _annaConnectionTimer = new System.Timers.Timer(60000); // 1 Minute
             _annaConnectionTimer.Elapsed += OnAnnaConnectionTimer;
-            _annaConnectionTimer.AutoReset = false; // Sadece bir kez çalışsın
+            _annaConnectionTimer.AutoReset = false; // Nur einmal ausführen
             _annaConnectionTimer.Start();
         }
 
         private void OnAnnaConnectionTimer(object? sender, ElapsedEventArgs e)
         {
-            // Anna'yı bağlı duruma getir
+            // Anna in verbundenen Zustand setzen
             Dispatcher.Invoke(() =>
             {
                 var anna = TeamData.Team.FirstOrDefault(p => p.Vorname == "Anna");
                 if (anna != null)
                 {
                     anna.IstVerbunden = true;
-                    UpdatePersonList(); // Dashboard'ı güncelle
+                    UpdatePersonList(); // Dashboard aktualisieren
                 }
             });
         }
@@ -161,7 +161,7 @@ namespace SmartSoldier.Views
 
         private void UpdateNavigationData()
         {
-            // NavigationData'dan güncel bilgileri al
+            // NavigationData - aktuelle Informationen abrufen
             double distanceWalked = 2.8 + (_random.NextDouble() * 0.5); // 2.8 - 3.3 km
             double distanceToTarget = NavigationData.CurrentDistance;
 
@@ -213,7 +213,7 @@ namespace SmartSoldier.Views
 
         private void NavigationData_DestinationChanged(object? sender, EventArgs e)
         {
-            // UI thread'de navigation bilgilerini güncelle
+            // UI thread - Navigation-Informationen aktualisieren
             Dispatcher.Invoke(() =>
             {
                 UpdateNavigationData();
@@ -235,7 +235,7 @@ namespace SmartSoldier.Views
 
         private void Team_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            // UI thread'de güncelle
+            // UI thread - aktualisieren
             Dispatcher.Invoke(() =>
             {
                 UpdatePersonList();

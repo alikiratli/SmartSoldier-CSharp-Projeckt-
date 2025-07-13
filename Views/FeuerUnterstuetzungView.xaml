@@ -32,7 +32,7 @@
         <TextBox x:Name="txtZeit" Grid.Row="3" Grid.Column="1" Margin="0,0,0,5"/>
         <Button x:Name="btnSenden" Content="Senden" Grid.Row="4" Grid.Column="1" Width="100" HorizontalAlignment="Left" Click="BtnSenden_Click"/>
         
-        <!-- Ateş istekleri tablosu -->
+        <!-- Feueranfragen Tabelle -->
         <TextBlock Text="Gestellte Feueranfragen:" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="14" Margin="0,0,0,5"/>
         <DataGrid x:Name="dgFeuerAnfragen" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>

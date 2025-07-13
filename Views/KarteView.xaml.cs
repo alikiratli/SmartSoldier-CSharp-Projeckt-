@@ -79,6 +79,9 @@ namespace SmartSoldier.Views
                     case "locationUpdated":
                         HandleLocationUpdated(message);
                         break;
+                    case "mapClicked":
+                        HandleMapClicked(message);
+                        break;
                 }
             }
             catch (Exception ex)
@@ -128,6 +131,123 @@ namespace SmartSoldier.Views
             {
                 System.Diagnostics.Debug.WriteLine($"Fehler beim Aktualisieren der Position: {ex.Message}");
             }
+        }
+
+        private void HandleMapClicked(JsonElement message)
+        {
+            try
+            {
+                var latitude = message.GetProperty("latitude").GetDouble();
+                var longitude = message.GetProperty("longitude").GetDouble();
+                
+                // UI Thread - Dialog anzeigen
+                Dispatcher.Invoke(() =>
+                {
+                    ShowLocationOptionsDialog(latitude, longitude);
+                });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Fehler beim Verarbeiten des Karten-Klicks: {ex.Message}");
+            }
+        }
+
+        private void ShowLocationOptionsDialog(double latitude, double longitude)
+        {
+            var dialog = new Window()
+            {
+                Title = "Standort-Optionen",
+                Width = 350,
+                Height = 200,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                ResizeMode = ResizeMode.NoResize
+            };
+
+            var panel = new StackPanel { Margin = new Thickness(15) };
+
+            // Header
+            panel.Children.Add(new TextBlock 
+            { 
+                Text = "Gewählte Position:", 
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(0, 0, 0, 10) 
+            });
+
+            // Koordinaten anzeigen
+            panel.Children.Add(new TextBlock 
+            { 
+                Text = $"Breitengrad: {latitude:F6}°",
+                Margin = new Thickness(0, 0, 0, 5) 
+            });
+
+            panel.Children.Add(new TextBlock 
+            { 
+                Text = $"Längengrad: {longitude:F6}°",
+                Margin = new Thickness(0, 0, 0, 15) 
+            });
+
+            // Buttons
+            var buttonPanel = new StackPanel 
+            { 
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+
+            var btnCopyCoordinates = new Button 
+            { 
+                Content = "Koordinaten kopieren", 
+                Width = 130,
+                Height = 30,
+                Margin = new Thickness(0, 0, 10, 0),
+                Background = System.Windows.Media.Brushes.LightBlue
+            };
+            btnCopyCoordinates.Click += (s, args) => {
+                var coordinates = $"{latitude:F6}, {longitude:F6}";
+                System.Windows.Clipboard.SetText(coordinates);
+                MessageBox.Show($"Koordinaten kopiert:\n{coordinates}", "Kopiert", 
+                               MessageBoxButton.OK, MessageBoxImage.Information);
+                dialog.Close();
+            };
+
+            var btnSetNavigation = new Button 
+            { 
+                Content = "Navigation setzen", 
+                Width = 130,
+                Height = 30,
+                Background = System.Windows.Media.Brushes.LightGreen
+            };
+            btnSetNavigation.Click += async (s, args) => {
+                _destinationLatitude = latitude;
+                _destinationLongitude = longitude;
+                
+                await mapWebView.CoreWebView2.ExecuteScriptAsync($"setClickedLocationAsDestination({latitude.ToString(System.Globalization.CultureInfo.InvariantCulture)}, {longitude.ToString(System.Globalization.CultureInfo.InvariantCulture)});");
+                
+                MessageBox.Show($"Navigation gesetzt zu:\n{latitude:F4}°N, {longitude:F4}°E\n\nRoute wird berechnet...", 
+                               "Navigation", MessageBoxButton.OK, MessageBoxImage.Information);
+                dialog.Close();
+            };
+
+            var btnCancel = new Button 
+            { 
+                Content = "Abbrechen", 
+                Width = 80,
+                Height = 30,
+                Margin = new Thickness(10, 0, 0, 0)
+            };
+            btnCancel.Click += (s, args) => {
+                // Clicked marker entfernen
+                _ = mapWebView.CoreWebView2.ExecuteScriptAsync("removeClickedMarker();");
+                dialog.Close();
+            };
+
+            buttonPanel.Children.Add(btnCopyCoordinates);
+            buttonPanel.Children.Add(btnSetNavigation);
+            buttonPanel.Children.Add(btnCancel);
+            panel.Children.Add(buttonPanel);
+
+            dialog.Content = panel;
+            dialog.ShowDialog();
         }
 
         private async void BtnCurrentLocation_Click(object sender, RoutedEventArgs e)

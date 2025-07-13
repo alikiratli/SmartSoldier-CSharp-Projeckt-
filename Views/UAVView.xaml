@@ -27,8 +27,71 @@
                 <RowDefinition Height="3*" />
                 <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
-            <!-- Kamerabild-Ersatz -->
-            <Border Grid.Row="0" Background="LightGreen" />
+            <!-- Kamerabild mit Nişan Alma Sistemi -->
+            <Grid Grid.Row="0">
+                <Border Background="LightGreen" />
+                <!-- Nişan Alma Çizgileri -->
+                <Canvas x:Name="canvasTargeting" Background="Transparent">
+                    <!-- Merkez Çapraz Nişan -->
+                    <Line x:Name="crosshairH" X1="0" Y1="0" X2="0" Y2="0" 
+                          Stroke="Red" StrokeThickness="2" Opacity="0.8" />
+                    <Line x:Name="crosshairV" X1="0" Y1="0" X2="0" Y2="0" 
+                          Stroke="Red" StrokeThickness="2" Opacity="0.8" />
+                    
+                    <!-- Köşe Nişan Çizgileri -->
+                    <!-- Sol Üst -->
+                    <Line x:Name="cornerTL1" X1="0" Y1="0" X2="0" Y2="0" 
+                          Stroke="Lime" StrokeThickness="3" Opacity="0.7" />
+                    <Line x:Name="cornerTL2" X1="0" Y1="0" X2="0" Y2="0" 
+                          Stroke="Lime" StrokeThickness="3" Opacity="0.7" />
+                    
+                    <!-- Sağ Üst -->
+                    <Line x:Name="cornerTR1" X1="0" Y1="0" X2="0" Y2="0" 
+                          Stroke="Lime" StrokeThickness="3" Opacity="0.7" />
+                    <Line x:Name="cornerTR2" X1="0" Y1="0" X2="0" Y2="0" 
+                          Stroke="Lime" StrokeThickness="3" Opacity="0.7" />
+                    
+                    <!-- Sol Alt -->
+                    <Line x:Name="cornerBL1" X1="0" Y1="0" X2="0" Y2="0" 
+                          Stroke="Lime" StrokeThickness="3" Opacity="0.7" />
+                    <Line x:Name="cornerBL2" X1="0" Y1="0" X2="0" Y2="0" 
+                          Stroke="Lime" StrokeThickness="3" Opacity="0.7" />
+                    
+                    <!-- Sağ Alt -->
+                    <Line x:Name="cornerBR1" X1="0" Y1="0" X2="0" Y2="0" 
+                          Stroke="Lime" StrokeThickness="3" Opacity="0.7" />
+                    <Line x:Name="cornerBR2" X1="0" Y1="0" X2="0" Y2="0" 
+                          Stroke="Lime" StrokeThickness="3" Opacity="0.7" />
+                    
+                    <!-- Mesafe Çemberleri -->
+                    <Ellipse x:Name="rangeCircle1" Stroke="Yellow" StrokeThickness="1" 
+                             Fill="Transparent" Opacity="0.5" />
+                    <Ellipse x:Name="rangeCircle2" Stroke="Yellow" StrokeThickness="1" 
+                             Fill="Transparent" Opacity="0.3" />
+                    
+                    <!-- Zoom Seviyesi İndikatörü -->
+                    <TextBlock x:Name="tbZoomLevel" Text="ZOOM: 1.0x" 
+                               Foreground="White" FontSize="12" FontWeight="Bold"
+                               Canvas.Left="10" Canvas.Top="10" />
+                    
+                    <!-- Hedef Kilidi İndikatörü -->
+                    <Rectangle x:Name="targetLockBox" Width="80" Height="60" 
+                               Stroke="Red" StrokeThickness="2" Fill="Transparent" 
+                               Visibility="Hidden" StrokeDashArray="3,3" />
+                    
+                    <!-- Koordinat Bilgisi -->
+                    <StackPanel x:Name="coordinateInfo" Orientation="Vertical" 
+                                Canvas.Right="10" Canvas.Top="10" Background="Black" 
+                                Opacity="0.8">
+                        <TextBlock x:Name="tbCoordinates" Text="N 41.123 E 29.456" 
+                                   Foreground="Lime" FontSize="10" FontFamily="Courier New" 
+                                   Margin="5,2"/>
+                        <TextBlock x:Name="tbElevation" Text="ALT: 1250m" 
+                                   Foreground="Lime" FontSize="10" FontFamily="Courier New" 
+                                   Margin="5,2"/>
+                    </StackPanel>
+                </Canvas>
+            </Grid>
             <!-- Gamepad-Steuerung -->
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
